@@ -1,0 +1,7 @@
+Những thư viện cần cài đặt:
+- tensorflow
+- matplotlib
+- scikit-learn
+- seaborn
+- flask
+- tensorflow-datasets

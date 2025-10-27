@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>🌸 Nhận diện hoa bằng MobileNetV2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<h1>🌼 Nhận diện hoa Oxford 102</h1>
+
+<form action="/predict" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept="image/*" required>
+    <button type="submit">Dự đoán</button>
+</form>
+
+{% if prediction %}
+    <h2>Kết quả: {{ prediction }}</h2>
+    <img src="{{ url_for('static', filename=image_path) }}" width="300">
+    {% if chart_path %}
+        <h3>Top 5 dự đoán:</h3>
+        <img src="{{ url_for('static', filename=chart_path) }}" width="400">
+    {% endif %}
+{% endif %}
+
+<p><a href="/dashboard">📊 Xem Dashboard mô hình</a></p>
+</body>
+</html>

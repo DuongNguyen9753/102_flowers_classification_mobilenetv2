@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>📊 Dashboard Mô hình</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<h1>📈 Dashboard phân tích mô hình</h1>
+
+<img src="{{ url_for('static', filename=chart_path) }}" width="500">
+
+<p><a href="/">⬅ Quay lại trang dự đoán</a></p>
+</body>
+</html>
