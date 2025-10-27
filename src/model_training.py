@@ -3,8 +3,7 @@ import tensorflow as tf
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras import layers, models
 
-# ==========================
-# 1️⃣ Cấu hình cơ bản
+# 1 Cấu hình cơ bản
 # ==========================
 MODEL_DIR = "model"        # Thư mục lưu mô hình
 MODEL_PATH = os.path.join(MODEL_DIR, "mobilenetv2_flowers.h5")
@@ -12,10 +11,9 @@ IMG_SIZE = (224, 224)
 BATCH_SIZE = 32
 EPOCHS = 100                 # Tăng lên (10–20) nếu muốn huấn luyện kỹ hơn
 
+# 2 Tải Oxford Flowers 102 từ TensorFlow Datasets
 # ==========================
-# 2️⃣ Tải Oxford Flowers 102 từ TensorFlow Datasets
-# ==========================
-print("🔽 Đang tải dataset Oxford 102 Flowers từ TensorFlow Datasets...")
+print("Đang tải dataset Oxford 102 Flowers từ TensorFlow Datasets...")
 import tensorflow_datasets as tfds
 
 dataset, info = tfds.load("oxford_flowers102", as_supervised=True, with_info=True)
@@ -35,10 +33,9 @@ test_ds = test_ds.map(preprocess).batch(BATCH_SIZE)
 
 num_classes = info.features["label"].num_classes
 class_names = info.features["label"].names
-print(f"✅ Đã tải dataset Oxford 102 Flowers với {num_classes} lớp hoa.")
+print(f"Đã tải dataset Oxford 102 Flowers với {num_classes} lớp hoa.")
 
-# ==========================
-# 3️⃣ Xây dựng mô hình MobileNetV2
+# 3 Xây dựng mô hình MobileNetV2
 # ==========================
 print("🔹 Xây dựng mô hình MobileNetV2...")
 
@@ -58,8 +55,7 @@ model.compile(optimizer='adam',
 
 model.summary()
 
-# ==========================
-# 4️⃣ Huấn luyện mô hình
+# 4 Huấn luyện mô hình
 # ==========================
 print("🚀 Bắt đầu huấn luyện...")
 history = model.fit(
@@ -68,17 +64,15 @@ history = model.fit(
     epochs=EPOCHS
 )
 
-# ==========================
-# 5️⃣ Lưu mô hình
+# 5 Lưu mô hình
 # ==========================
 if not os.path.exists(MODEL_DIR):
     os.makedirs(MODEL_DIR)
 
 model.save(MODEL_PATH)
-print(f"✅ Mô hình đã được lưu tại: {MODEL_PATH}")
+print(f"Mô hình đã được lưu tại: {MODEL_PATH}")
 
-# ==========================
-# 6️⃣ Đánh giá nhanh trên tập test
+# 6 Đánh giá nhanh trên tập test
 # ==========================
 print("Đánh giá nhanh trên tập test:")
 loss, acc = model.evaluate(test_ds)
