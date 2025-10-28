@@ -13,7 +13,7 @@ app = Flask(__name__,
             static_folder="../web/static")
 
 BASE_DIR = os.path.dirname(__file__)
-MODEL_PATH = r"X:\University\KPDL\102_category_flower_mobilenetv2\model\mobilenetv2_flowers.h5"
+MODEL_PATH = r"..\102_flowers_classification_mobilenetv2\model\mobilenetv2_flowers.h5"
 STATIC_DIR = os.path.join(BASE_DIR, "../web/static/uploads")
 CHART_DIR = os.path.join(BASE_DIR, "../web/static/charts")
 os.makedirs(STATIC_DIR, exist_ok=True)
@@ -24,7 +24,7 @@ if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(f"Không tìm thấy model tại: {MODEL_PATH}")
 
 model = tf.keras.models.load_model(MODEL_PATH)
-print("✅ Model MobileNetV2 đã sẵn sàng.")
+print(" Model MobileNetV2 đã sẵn sàng.")
 
 # ---------------- LOAD FLOWER LABELS ----------------
 _, info = tfds.load("oxford_flowers102", with_info=True, as_supervised=True)
