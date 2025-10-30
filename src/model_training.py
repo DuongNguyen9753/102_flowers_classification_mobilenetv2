@@ -9,10 +9,9 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
 from feature_engineering import augment_data
 
+# 1️. Tải dataset Oxford 102 Flowers
 # -------------------------
-# 1️⃣ Tải dataset Oxford 102 Flowers
-# -------------------------
-print("🔹 Tải dataset Oxford 102 Flowers...")
+print("Tải dataset Oxford 102 Flowers...")
 (ds_train, ds_val, ds_test), ds_info = tfds.load(
     'oxford_flowers102',
     split=['train', 'validation', 'test'],
@@ -23,8 +22,7 @@ print("🔹 Tải dataset Oxford 102 Flowers...")
 num_classes = ds_info.features['label'].num_classes
 print(f"Tổng số lớp hoa: {num_classes}")
 
-# -------------------------
-# 2️⃣ Tiền xử lý dữ liệu
+# 2️. Tiền xử lý dữ liệu
 # -------------------------
 IMG_SIZE = 224
 BATCH_SIZE = 32
@@ -46,7 +44,7 @@ ds_val = ds_val.batch(BATCH_SIZE).prefetch(tf.data.AUTOTUNE)
 ds_test = ds_test.batch(BATCH_SIZE).prefetch(tf.data.AUTOTUNE)
 
 # -------------------------
-# 3️⃣ Xây dựng mô hình MobileNetV2
+# 3️. Xây dựng mô hình MobileNetV2
 # -------------------------
 base_model = tf.keras.applications.MobileNetV2(
     input_shape=(IMG_SIZE, IMG_SIZE, 3),
@@ -71,7 +69,7 @@ model.compile(
 model.summary()
 
 # -------------------------
-# 4️⃣ Callbacks: EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
+# 4️. Callbacks: EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
 # -------------------------
 os.makedirs("../102_flowers_classification_mobilenetv2/model", exist_ok=True)
 checkpoint_path = "../102_flowers_classification_mobilenetv2/model/mobilenetv2_flowers.h5"
@@ -83,7 +81,7 @@ callbacks = [
 ]
 
 # -------------------------
-# 5️⃣ Huấn luyện mô hình
+# 5️. Huấn luyện mô hình
 # -------------------------
 history = model.fit(
     ds_train,
@@ -93,16 +91,16 @@ history = model.fit(
 )
 
 # -------------------------
-# 6️⃣ Đánh giá và lưu mô hình
+# 6️. Đánh giá và lưu mô hình
 # -------------------------
 test_loss, test_acc = model.evaluate(ds_test)
-print(f"🎯 Accuracy trên tập test: {test_acc:.4f}")
+print(f"Accuracy trên tập test: {test_acc:.4f}")
 
 model.save(checkpoint_path)
-print(f"✅ Mô hình đã được lưu tại: {checkpoint_path}")
+print(f"Mô hình đã được lưu tại: {checkpoint_path}")
 
 # -------------------------
-# 7️⃣ Vẽ biểu đồ Accuracy & Loss
+# 7️. Vẽ biểu đồ Accuracy & Loss
 # -------------------------
 plt.figure(figsize=(10, 5))
 plt.plot(history.history['accuracy'], label='Train Accuracy')
@@ -119,7 +117,7 @@ plt.legend()
 plt.savefig("../102_flowers_classification_mobilenetv2/web/static/training_loss.png")
 
 # -------------------------
-# 8️⃣ Confusion Matrix (10 loại hoa đầu)
+# 8️. Confusion Matrix (10 loại hoa đầu)
 # -------------------------
 y_true = []
 y_pred = []
@@ -140,4 +138,4 @@ plt.title("Confusion Matrix - 10 lớp hoa đầu")
 plt.savefig("../102_flowers_classification_mobilenetv2/web/static/confusion_matrix.png")
 plt.close()
 
-print("✅ Huấn luyện hoàn tất, biểu đồ đã lưu trong thư mục web/static/")
+print("Huấn luyện hoàn tất, biểu đồ đã lưu trong thư mục web/static/")
